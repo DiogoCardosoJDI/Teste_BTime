@@ -1,0 +1,5 @@
+﻿cidade;temperatura;sensacao_termica;temperatura_min;temperatura_max;umidade;clima;velocidade_vento;data_hora
+São Paulo;21.16;20.56;20.75;21.92;47;céu limpo;3.09;2025-08-01 14:58:56.375439
+Rio de Janeiro;22.76;22.55;21.98;25.97;56;algumas nuvens;5.14;2025-08-01 14:58:58.324363
+Jundiaí;23.21;22.4;23.21;23.21;31;céu limpo;1.7;2025-08-01 14:59:00.259933
+Cambuí;21.84;20.97;21.84;21.84;34;céu limpo;2.84;2025-08-01 14:59:02.191698

@@ -1,0 +1,51 @@
+2025-08-01 15:14:10 - INFO - 
+➡️ Página 1 | Consultando: https://api.football-data.org/v4/competitions/BSA/matches
+2025-08-01 15:14:10 - INFO -    Parâmetros: {'season': 2024, 'page': 1}
+2025-08-01 15:14:13 - INFO -    Status Code: 200
+2025-08-01 15:14:14 - INFO - 
+➡️ Página 2 | Consultando: https://api.football-data.org/v4/competitions/BSA/matches
+2025-08-01 15:14:14 - INFO -    Parâmetros: {'season': 2024, 'page': 2}
+2025-08-01 15:14:15 - INFO -    Status Code: 200
+2025-08-01 15:14:17 - INFO - 
+➡️ Página 3 | Consultando: https://api.football-data.org/v4/competitions/BSA/matches
+2025-08-01 15:14:17 - INFO -    Parâmetros: {'season': 2024, 'page': 3}
+2025-08-01 15:14:19 - INFO -    Status Code: 200
+2025-08-01 15:14:20 - INFO - 
+➡️ Página 4 | Consultando: https://api.football-data.org/v4/competitions/BSA/matches
+2025-08-01 15:14:20 - INFO -    Parâmetros: {'season': 2024, 'page': 4}
+2025-08-01 15:14:22 - INFO -    Status Code: 200
+2025-08-01 15:14:23 - INFO - 
+➡️ Página 5 | Consultando: https://api.football-data.org/v4/competitions/BSA/matches
+2025-08-01 15:14:23 - INFO -    Parâmetros: {'season': 2024, 'page': 5}
+2025-08-01 15:14:25 - INFO -    Status Code: 200
+2025-08-01 15:14:26 - INFO - 
+➡️ Página 6 | Consultando: https://api.football-data.org/v4/competitions/BSA/matches
+2025-08-01 15:14:26 - INFO -    Parâmetros: {'season': 2024, 'page': 6}
+2025-08-01 15:14:28 - INFO -    Status Code: 200
+2025-08-01 15:14:29 - INFO - 
+➡️ Página 7 | Consultando: https://api.football-data.org/v4/competitions/BSA/matches
+2025-08-01 15:14:29 - INFO -    Parâmetros: {'season': 2024, 'page': 7}
+2025-08-01 15:14:31 - INFO -    Status Code: 200
+2025-08-01 15:14:32 - INFO - 
+➡️ Página 8 | Consultando: https://api.football-data.org/v4/competitions/BSA/matches
+2025-08-01 15:14:32 - INFO -    Parâmetros: {'season': 2024, 'page': 8}
+2025-08-01 15:14:34 - INFO -    Status Code: 200
+2025-08-01 15:14:35 - INFO - 
+➡️ Página 9 | Consultando: https://api.football-data.org/v4/competitions/BSA/matches
+2025-08-01 15:14:35 - INFO -    Parâmetros: {'season': 2024, 'page': 9}
+2025-08-01 15:14:38 - INFO -    Status Code: 200
+2025-08-01 15:14:39 - INFO - 
+➡️ Página 10 | Consultando: https://api.football-data.org/v4/competitions/BSA/matches
+2025-08-01 15:14:39 - INFO -    Parâmetros: {'season': 2024, 'page': 10}
+2025-08-01 15:14:41 - INFO -    Status Code: 200
+2025-08-01 15:14:42 - INFO - 
+➡️ Página 11 | Consultando: https://api.football-data.org/v4/competitions/BSA/matches
+2025-08-01 15:14:42 - INFO -    Parâmetros: {'season': 2024, 'page': 11}
+2025-08-01 15:14:44 - INFO -    Status Code: 200
+2025-08-01 15:14:45 - INFO - 
+➡️ Página 12 | Consultando: https://api.football-data.org/v4/competitions/BSA/matches
+2025-08-01 15:14:45 - INFO -    Parâmetros: {'season': 2024, 'page': 12}
+2025-08-01 15:14:46 - INFO -    Status Code: 429
+2025-08-01 15:14:46 - WARNING - Erro 429: Limite de requisições excedido.
+2025-08-01 15:14:46 - INFO - 
+CSV salvo com sucesso!

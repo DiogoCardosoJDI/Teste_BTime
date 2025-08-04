@@ -11,7 +11,8 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
 def configurar_logging(nome_arquivo_log="web_scraping.log", nivel=logging.INFO):
-    os.makedirs("logs", exist_ok=True)  # Cria pasta se não existir
+    # Cria pasta se não existir
+    os.makedirs("logs", exist_ok=True)
 
     caminho_log = os.path.join("logs", nome_arquivo_log)
 
@@ -20,7 +21,8 @@ def configurar_logging(nome_arquivo_log="web_scraping.log", nivel=logging.INFO):
         level=nivel,
         format="%(asctime)s - %(levelname)s - %(message)s",
         datefmt="%Y-%m-%d %H:%M:%S",
-        filemode='a'  # ou 'w' para sobrescrever cada vez
+        # ou 'w' para sobrescrever cada vez
+        filemode='a'
     )
 
     # Também mostra no terminal:
@@ -33,22 +35,30 @@ def configurar_logging(nome_arquivo_log="web_scraping.log", nivel=logging.INFO):
 def iniciar_driver():
     logger.info("Iniciando a configuração para acessar a web")
     options = Options()
-    options.add_argument("--headless")  # Executa sem abrir o navegador visivelmente
-    options.add_argument("--no-sandbox")  # Necessário em ambientes Linux restritos
-    options.add_argument("--disable-gpu")  # Evita erros em alguns sistemas
+    # Executa sem abrir o navegador visivelmente
+    options.add_argument("--headless")
+    # Necessário em ambientes Linux restritos
+    options.add_argument("--no-sandbox")
+    # Evita erros em alguns sistemas
+    options.add_argument("--disable-gpu")
     logger.info("Fim da configuração para acessar a web, retornando objeto")
     return webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
 # Função para extrair dados de livros de uma única página
 def extrair_dados_pagina(soup):
     livros = []
-    artigos = soup.find_all('article', class_='product_pod')  # Cada livro está dentro de uma <article>
+    # Cada livro está dentro de uma <article>
+    artigos = soup.find_all('article', class_='product_pod')
 
     for artigo in artigos:
-        titulo = artigo.h3.a['title']  # O título do livro está no atributo 'title'
-        preco = artigo.find('p', class_='price_color').text.strip().replace('£', '')  # Remove o símbolo da libra
-        disponibilidade = artigo.find('p', class_='instock availability').text.strip()  # Ex: "In stock"
-        classificacao = artigo.p['class'][1]  # A segunda classe da tag <p> contém a classificação (ex: 'Three')
+        # O título do livro está no atributo 'title'
+        titulo = artigo.h3.a['title']
+        # Remove o símbolo da libra
+        preco = artigo.find('p', class_='price_color').text.strip().replace('£', '')
+        # Ex: "In stock"
+        disponibilidade = artigo.find('p', class_='instock availability').text.strip()
+        # A segunda classe da tag <p> contém a classificação (ex: 'Three')
+        classificacao = artigo.p['class'][1]
 
         livros.append({
             "titulo": titulo,
@@ -56,26 +66,33 @@ def extrair_dados_pagina(soup):
             "disponibilidade": disponibilidade,
             "classificacao": classificacao
         })
-
-    return livros  # Retorna um dicionário com os dados dos livros
+    # Retorna um dicionário com os dados dos livros
+    return livros
 
 # Função principal que controla a coleta de várias páginas
 def realizar_scraping():
-    url_base = "http://books.toscrape.com/catalogue/page-{}.html"  # URL base com paginação
-    chrome = iniciar_driver()  # Inicia o navegador
-    dados_completos = []  # Lista para armazenar todos os dados coletados
+    # URL base com paginação
+    url_base = "http://books.toscrape.com/catalogue/page-{}.html"
+    # Inicia o navegador
+    chrome = iniciar_driver()
+    # Lista para armazenar todos os dados coletados
+    dados_completos = []
 
     try:
         # Loop pelas páginas (nesse exemplo, da 1 até a 5)
         for pagina in range(1, 6):
             logger.info(f"Coletando página {pagina}...")
-            chrome.get(url_base.format(pagina))  # Acessa a página
-            time.sleep(random.uniform(1.5, 3.5))  # Aguarda de forma aleatória para parecer mais humano
+            # Acessa a página
+            chrome.get(url_base.format(pagina))
+            # Aguarda de forma aleatória para parecer mais humano
+            time.sleep(random.uniform(1.5, 3.5))
 
             # Pega o HTML da página e transforma em objeto BeautifulSoup
             soup = BeautifulSoup(chrome.page_source, "html.parser")
-            dados = extrair_dados_pagina(soup)  # Extrai os dados da página
-            dados_completos.extend(dados)  # Adiciona os dados à lista principal
+            # Extrai os dados da página
+            dados = extrair_dados_pagina(soup)
+            # Adiciona os dados à lista principal
+            dados_completos.extend(dados)
 
         # Cria DataFrame e exporta para CSV
         logger.info("Criando DataFrame e exportando para CSV")
@@ -89,7 +106,8 @@ def realizar_scraping():
             # Escreve linha por linha com todos os campos entre aspas para evitar quebra das informações
             logger.info("Escrevendo linha por linha no csv")
             for linha in dados_completos:
-                titulo = linha["titulo"].replace('"', '""')  # escapa aspas duplas se houver
+                # escapa aspas duplas se houver
+                titulo = linha["titulo"].replace('"', '""')
                 preco = linha["preco_libras"]
                 disponibilidade = linha["disponibilidade"]
                 classificacao = linha["classificacao"]
@@ -106,7 +124,8 @@ def realizar_scraping():
         logger.error(f"Erro durante o scraping: {e}")
 
     finally:
-        chrome.quit()  # Garante que o navegador será fechado mesmo se houver erro
+        # Garante que o navegador será fechado mesmo se houver erro
+        chrome.quit()
 
 # Ponto de entrada principal do script
 if __name__ == "__main__":

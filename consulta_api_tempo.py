@@ -6,7 +6,8 @@ import pandas as pd
 from datetime import datetime
 
 def configurar_logging(nome_arquivo_log="consulta_api_tempo.log", nivel=logging.INFO):
-    os.makedirs("logs", exist_ok=True)  # Cria pasta se não existir
+    # Cria pasta se não existir
+    os.makedirs("logs", exist_ok=True)
 
     caminho_log = os.path.join("logs", nome_arquivo_log)
 
@@ -15,7 +16,8 @@ def configurar_logging(nome_arquivo_log="consulta_api_tempo.log", nivel=logging.
         level=nivel,
         format="%(asctime)s - %(levelname)s - %(message)s",
         datefmt="%Y-%m-%d %H:%M:%S",
-        filemode='a'  # ou 'w' para sobrescrever cada vez
+        # ou 'w' para sobrescrever cada vez
+        filemode='a'
     )
 
     # Também mostra no terminal:
@@ -39,10 +41,14 @@ def consultar_clima(cidade="São Paulo", pais="BR"):
 
     # Parâmetros da URL
     params = {
-        "q": f"{cidade},{pais}",     # Nome da cidade e país (ex: "São Paulo,BR")
-        "appid": TOKEN,            # Chave de acesso
-        "units": "metric",           # Retorna temperatura em Celsius
-        "lang": "pt_br"              # Retorna descrições em português
+        # Nome da cidade e país (ex: "São Paulo,BR")
+        "q": f"{cidade},{pais}",
+        # Chave de acesso
+        "appid": TOKEN,
+        # Retorna temperatura em Celsius
+        "units": "metric",
+        # Retorna descrições em português
+        "lang": "pt_br"
     }
     
     logger.info(f"\nConsultando clima de: {cidade} - {pais}")
@@ -54,7 +60,8 @@ def consultar_clima(cidade="São Paulo", pais="BR"):
         logger.info(f"Status Code: {resposta.status_code}")
 
         if resposta.status_code == 200:
-            dados = resposta.json()  # Converte a resposta JSON em dicionário
+            # Converte a resposta JSON em dicionário
+            dados = resposta.json()
 
             # Extrai dados principais
             info = {

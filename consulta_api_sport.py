@@ -6,7 +6,8 @@ import pandas as pd
 from datetime import datetime
 
 def configurar_logging(nome_arquivo_log="consulta_api_tempo.log", nivel=logging.INFO):
-    os.makedirs("logs", exist_ok=True)  # Cria pasta se não existir
+    # Cria pasta se não existir
+    os.makedirs("logs", exist_ok=True)
 
     caminho_log = os.path.join("logs", nome_arquivo_log)
 
@@ -15,10 +16,11 @@ def configurar_logging(nome_arquivo_log="consulta_api_tempo.log", nivel=logging.
         level=nivel,
         format="%(asctime)s - %(levelname)s - %(message)s",
         datefmt="%Y-%m-%d %H:%M:%S",
-        filemode='a'  # ou 'w' para sobrescrever cada vez
+        # ou 'w' para sobrescrever cada vez
+        filemode='a'
     )
 
-    # Também mostra no terminal:
+    # Também mostra no terminal
     console = logging.StreamHandler()
     console.setLevel(nivel)
     console.setFormatter(logging.Formatter("%(levelname)s - %(message)s"))
@@ -34,8 +36,10 @@ def consultar_partidas(competicao_id="BSA", temporada=2024, pagina=1):
 
     # Cabeçalho com a chave de autenticação exigida pela API
     headers = {
-        "X-Auth-Token": TOKEN,               # Autenticação via token
-        "Accept": "application/json"         # Requisição em formato JSON
+        # Autenticação via token
+        "X-Auth-Token": TOKEN,
+        # Requisição em formato JSON
+        "Accept": "application/json"
     }
 
     # Parâmetros da requisição: temporada e paginação
@@ -44,22 +48,27 @@ def consultar_partidas(competicao_id="BSA", temporada=2024, pagina=1):
         "page": pagina
     }
     # Exibe informações para debug
-    logger.info(f"\n➡️ Página {pagina} | Consultando: {url}")
+    logger.info(f"\nPágina {pagina} | Consultando: {url}")
     logger.info(f"   Parâmetros: {params}")
 
     try:
         # Envia a requisição GET para a API
         resposta = requests.get(url, headers=headers, params=params, timeout=30)
-        logger.info(f"   Status Code: {resposta.status_code}")  # Mostra o código da resposta
+        # Mostra o código da resposta
+        logger.info(f"   Status Code: {resposta.status_code}")
 
         # Caso a resposta seja bem-sucedida (200 OK)
         if resposta.status_code == 200:
-            dados = resposta.json()                       # Converte resposta em dicionário
-            matches = dados.get("matches", [])            # Extrai a lista de partidas
+            # Converte resposta em dicionário
+            dados = resposta.json()
+            # Extrai a lista de partidas
+            matches = dados.get("matches", [])
             if not matches:
                 logger.info("Nenhuma partida encontrada.")
-                return pd.DataFrame(), False              # Retorna DataFrame vazio se não houver partidas
-            return pd.DataFrame(matches), True            # Retorna os dados em formato de tabela
+                # Retorna DataFrame vazio se não houver partidas
+                return pd.DataFrame(), False
+            # Retorna os dados em formato de tabela
+            return pd.DataFrame(matches), True
         elif resposta.status_code == 403:
             logger.warning("Erro 403: Token inválido ou sem permissão.")
         elif resposta.status_code == 429:
@@ -85,20 +94,27 @@ if __name__ == "__main__":
     # Cria o arquivo de Log
     configurar_logging(nome_arquivo)
     logger = logging.getLogger(__name__)
-
-    competicao_id = "BSA"      # Código do Brasileirao serie A (pode trocar por PL, CL, PD, etc.)
-    temporada = 2024          # Temporada desejada
-    pagina = 1                # Página inicial
-    todos_os_jogos = pd.DataFrame()  # DataFrame acumulador para armazenar todos os jogos
+    # Código do Brasileirao serie A (pode trocar por PL, CL, PD, etc.)
+    competicao_id = "BSA"
+    # Temporada desejada
+    temporada = 2024
+    # Página inicial
+    pagina = 1
+    # DataFrame acumulador para armazenar todos os jogos
+    todos_os_jogos = pd.DataFrame()
 
     # Loop para buscar todas as páginas de partidas
     while True:
         df, has_data = consultar_partidas(competicao_id, temporada, pagina)
         if df.empty or not has_data:
-            break                                 # Sai do loop se não houver mais dados
-        todos_os_jogos = pd.concat([todos_os_jogos, df], ignore_index=True)  # Acumula os dados
-        pagina += 1                               # Vai para próxima página
-        time.sleep(1)                             # Aguarda 1 segundo para evitar limite de requisições
+            # Sai do loop se não houver mais dados
+            break
+        # Acumula os dados
+        todos_os_jogos = pd.concat([todos_os_jogos, df], ignore_index=True)
+        # Vai para próxima página
+        pagina += 1
+        # Aguarda 1 segundo para evitar limite de requisições
+        time.sleep(1)
 
     # Exporta os dados para CSV se houver partidas
     if not todos_os_jogos.empty:
